@@ -15,6 +15,34 @@ var bytes = require('@ethersproject/bytes');
 var keccak256 = require('@ethersproject/keccak256');
 var strings = require('@ethersproject/strings');
 
+function _defineProperties(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o);
+  }
+}
+function _createClass(e, r, t) {
+  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+    writable: !1
+  }), e;
+}
+function _extends() {
+  return _extends = Object.assign ? Object.assign.bind() : function (n) {
+    for (var e = 1; e < arguments.length; e++) {
+      var t = arguments[e];
+      for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]);
+    }
+    return n;
+  }, _extends.apply(null, arguments);
+}
+function _inheritsLoose(t, o) {
+  t.prototype = Object.create(o.prototype), t.prototype.constructor = t, _setPrototypeOf(t, o);
+}
+function _setPrototypeOf(t, e) {
+  return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) {
+    return t.__proto__ = e, t;
+  }, _setPrototypeOf(t, e);
+}
 function _toPrimitive(t, r) {
   if ("object" != typeof t || !t) return t;
   var e = t[Symbol.toPrimitive];
@@ -27,50 +55,7 @@ function _toPrimitive(t, r) {
 }
 function _toPropertyKey(t) {
   var i = _toPrimitive(t, "string");
-  return "symbol" == typeof i ? i : String(i);
-}
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
-  }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  Object.defineProperty(Constructor, "prototype", {
-    writable: false
-  });
-  return Constructor;
-}
-function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends.apply(this, arguments);
-}
-function _inheritsLoose(subClass, superClass) {
-  subClass.prototype = Object.create(superClass.prototype);
-  subClass.prototype.constructor = subClass;
-  _setPrototypeOf(subClass, superClass);
-}
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-  return _setPrototypeOf(o, p);
+  return "symbol" == typeof i ? i : i + "";
 }
 
 (function (ChainId) {
@@ -478,7 +463,7 @@ var Fraction = /*#__PURE__*/function () {
   /**
    * Helper method for converting any super class back to a fraction
    */;
-  _createClass(Fraction, [{
+  return _createClass(Fraction, [{
     key: "quotient",
     get: function get() {
       return JSBI.divide(this.numerator, this.denominator);
@@ -495,12 +480,10 @@ var Fraction = /*#__PURE__*/function () {
       return new Fraction(this.numerator, this.denominator);
     }
   }]);
-  return Fraction;
 }();
 
 var Big$1 = /*#__PURE__*/toFormat(_Big);
 var CurrencyAmount = /*#__PURE__*/function (_Fraction) {
-  _inheritsLoose(CurrencyAmount, _Fraction);
   function CurrencyAmount(currency, numerator, denominator) {
     var _this;
     _this = _Fraction.call(this, numerator, denominator) || this;
@@ -514,6 +497,7 @@ var CurrencyAmount = /*#__PURE__*/function (_Fraction) {
    * @param currency the currency in the amount
    * @param rawAmount the raw token or ether amount
    */
+  _inheritsLoose(CurrencyAmount, _Fraction);
   CurrencyAmount.fromRawAmount = function fromRawAmount(currency, rawAmount) {
     return new CurrencyAmount(currency, rawAmount);
   }
@@ -573,14 +557,13 @@ var CurrencyAmount = /*#__PURE__*/function (_Fraction) {
     Big$1.DP = this.currency.decimals;
     return new Big$1(this.quotient.toString()).div(this.decimalScale.toString()).toFormat(format);
   };
-  _createClass(CurrencyAmount, [{
+  return _createClass(CurrencyAmount, [{
     key: "wrapped",
     get: function get() {
       if (this.currency.isToken) return this;
       return CurrencyAmount.fromFractionalAmount(this.currency.wrapped, this.numerator, this.denominator);
     }
   }]);
-  return CurrencyAmount;
 }(Fraction);
 
 var ONE_HUNDRED = /*#__PURE__*/new Fraction( /*#__PURE__*/JSBI.BigInt(100));
@@ -592,7 +575,6 @@ function toPercent(fraction) {
   return new Percent(fraction.numerator, fraction.denominator);
 }
 var Percent = /*#__PURE__*/function (_Fraction) {
-  _inheritsLoose(Percent, _Fraction);
   function Percent() {
     var _this;
     _this = _Fraction.apply(this, arguments) || this;
@@ -602,6 +584,7 @@ var Percent = /*#__PURE__*/function (_Fraction) {
     _this.isPercent = true;
     return _this;
   }
+  _inheritsLoose(Percent, _Fraction);
   var _proto = Percent.prototype;
   _proto.add = function add(other) {
     return toPercent(_Fraction.prototype.add.call(this, other));
@@ -631,7 +614,6 @@ var Percent = /*#__PURE__*/function (_Fraction) {
 }(Fraction);
 
 var Price = /*#__PURE__*/function (_Fraction) {
-  _inheritsLoose(Price, _Fraction);
   /**
    * Construct a price, either with the base and quote currency amount, or the
    * @param args
@@ -664,6 +646,7 @@ var Price = /*#__PURE__*/function (_Fraction) {
   /**
    * Flip the price, switching the base and quote currency
    */
+  _inheritsLoose(Price, _Fraction);
   var _proto = Price.prototype;
   _proto.invert = function invert() {
     return new Price(this.quoteCurrency, this.baseCurrency, this.numerator, this.denominator);
@@ -702,13 +685,12 @@ var Price = /*#__PURE__*/function (_Fraction) {
     }
     return this.adjustedForDecimals.toFixed(decimalPlaces, format, rounding);
   };
-  _createClass(Price, [{
+  return _createClass(Price, [{
     key: "adjustedForDecimals",
     get: function get() {
       return _Fraction.prototype.multiply.call(this, this.scalar);
     }
   }]);
-  return Price;
 }(Fraction);
 
 /**
@@ -735,7 +717,6 @@ function BaseCurrency(chainId, decimals, symbol, name) {
  * Represents the native currency of the chain on which it resides, e.g.
  */
 var NativeCurrency = /*#__PURE__*/function (_BaseCurrency) {
-  _inheritsLoose(NativeCurrency, _BaseCurrency);
   function NativeCurrency() {
     var _this;
     _this = _BaseCurrency.apply(this, arguments) || this;
@@ -743,6 +724,7 @@ var NativeCurrency = /*#__PURE__*/function (_BaseCurrency) {
     _this.isToken = false;
     return _this;
   }
+  _inheritsLoose(NativeCurrency, _BaseCurrency);
   return NativeCurrency;
 }(BaseCurrency);
 
@@ -774,7 +756,6 @@ function checkValidAddress(address) {
  * Represents an ERC20 token with a unique address and some metadata.
  */
 var Token = /*#__PURE__*/function (_BaseCurrency) {
-  _inheritsLoose(Token, _BaseCurrency);
   /**
    *
    * @param chainId {@link BaseCurrency#chainId}
@@ -810,6 +791,7 @@ var Token = /*#__PURE__*/function (_BaseCurrency) {
    * Returns true if the two tokens are equivalent, i.e. have the same chainId and address.
    * @param other other token to compare
    */
+  _inheritsLoose(Token, _BaseCurrency);
   var _proto = Token.prototype;
   _proto.equals = function equals(other) {
     return other.isToken && this.chainId === other.chainId && this.address.toLowerCase() === other.address.toLowerCase();
@@ -828,13 +810,12 @@ var Token = /*#__PURE__*/function (_BaseCurrency) {
   /**
    * Return this token, which does not need to be wrapped
    */;
-  _createClass(Token, [{
+  return _createClass(Token, [{
     key: "wrapped",
     get: function get() {
       return this;
     }
   }]);
-  return Token;
 }(BaseCurrency);
 
 /**
@@ -864,10 +845,10 @@ var WETH9 = {
  * Ether is the main usage of a 'native' currency, i.e. for Ethereum mainnet and all testnets
  */
 var Ether = /*#__PURE__*/function (_NativeCurrency) {
-  _inheritsLoose(Ether, _NativeCurrency);
   function Ether(chainId) {
     return _NativeCurrency.call(this, chainId, 18, 'ETH', 'Ether') || this;
   }
+  _inheritsLoose(Ether, _NativeCurrency);
   Ether.onChain = function onChain(chainId) {
     var _this$_etherCache$cha;
     return (_this$_etherCache$cha = this._etherCache[chainId]) != null ? _this$_etherCache$cha : this._etherCache[chainId] = new Ether(chainId);
@@ -876,7 +857,7 @@ var Ether = /*#__PURE__*/function (_NativeCurrency) {
   _proto.equals = function equals(other) {
     return other.isNative && other.chainId === this.chainId;
   };
-  _createClass(Ether, [{
+  return _createClass(Ether, [{
     key: "wrapped",
     get: function get() {
       var weth9 = WETH9[this.chainId];
@@ -884,7 +865,6 @@ var Ether = /*#__PURE__*/function (_NativeCurrency) {
       return weth9;
     }
   }]);
-  return Ether;
 }(NativeCurrency);
 Ether._etherCache = {};
 
