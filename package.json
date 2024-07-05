@@ -1,6 +1,6 @@
 {
   "name": "@uniswap/sdk-core",
-  "version": "3.4.0-auroria.1",
+  "version": "3.4.2-auroria.1",
   "description": "⚒️ An SDK for building applications on top of Uniswap V3",
   "repository": "https://github.com/adimov-eth/sdk-core.git",
   "keywords": [
@@ -15,8 +15,10 @@
     "dist"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=10",
+    "yarn": ">=3.2.3"
   },
+  "packageManager": "yarn@3.2.3",
   "scripts": {
     "build": "tsdx build",
     "lint": "tsdx lint src",
